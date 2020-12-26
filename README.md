@@ -4,4 +4,4 @@ This repo contains notes I take while going through [Unity Learn](https://learn.
 Suggestions for myself while taking notes:
 - Take notes in the form of mind maps
 - Review notes by creating markdown pages afterwards
-- Be pragmatic in notes
+- Be pragmatic in notes. This is to help me capture useful concepts and be a better game programmer.
