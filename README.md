@@ -1,5 +1,5 @@
 ### Unity Learn Notes
-This repo contains notes I take while going through [Unity Learn](https://learn.unity.com). Mind maps leverage the Mind Map plugin for jetbrains (a.k.a intellisense) IDEs.
+This repo contains notes I take while going through [Unity Learn](https://learn.unity.com). Mind maps leverage the [Mind Map plugin](https://plugins.jetbrains.com/plugin/8045-idea-mind-map) for jetbrains (a.k.a intellisense) IDEs.
 
 Suggestions for myself while taking notes:
 - Take notes in the form of mind maps
