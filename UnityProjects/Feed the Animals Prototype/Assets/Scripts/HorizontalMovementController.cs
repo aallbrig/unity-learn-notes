@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.WSA;
+﻿using UnityEngine;
 
 public class HorizontalMovementController : MonoBehaviour
 {
