@@ -66,7 +66,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5795516542036528054}
   - component: {fileID: 5795516542036528055}
-  - component: {fileID: 5795516542036528052}
+  - component: {fileID: 5670199341567307843}
+  - component: {fileID: 3389950710129912046}
   m_Layer: 0
   m_Name: RandomAnimal
   m_TagString: Untagged
@@ -104,7 +105,7 @@ MonoBehaviour:
   activeIndex: 0
   randomizeActivePrefab: 1
   targetGameObject: {fileID: 5795516541140932409}
---- !u!114 &5795516542036528052
+--- !u!114 &5670199341567307843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,6 +118,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+--- !u!114 &3389950710129912046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795516542036528009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b78871936236e4799fd010cfe29450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topBounds: 110
+  bottomBounds: -20
 --- !u!1001 &5795516540802537544
 PrefabInstance:
   m_ObjectHideFlags: 0

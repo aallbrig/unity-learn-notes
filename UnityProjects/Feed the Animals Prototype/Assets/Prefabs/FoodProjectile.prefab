@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9171547243491313196}
   - component: {fileID: 9171547243491313199}
   - component: {fileID: 9171547243491313197}
+  - component: {fileID: 6702259357620805099}
   m_Layer: 0
   m_Name: FoodProjectile
   m_TagString: Untagged
@@ -61,6 +62,20 @@ MonoBehaviour:
   activeIndex: 0
   randomizeActivePrefab: 1
   targetGameObject: {fileID: 9171547245262562534}
+--- !u!114 &6702259357620805099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9171547243491313198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b78871936236e4799fd010cfe29450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topBounds: 60
+  bottomBounds: -10
 --- !u!1 &9171547245262562534
 GameObject:
   m_ObjectHideFlags: 0
