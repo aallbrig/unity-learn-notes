@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
+  - component: {fileID: 534669907}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -539,6 +540,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1060053195}
   rotateOffset: {x: -10, y: 0, z: 0}
+--- !u!114 &534669907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b969c7cbbc9e2e44b1aadf6a019e58d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleKey: 101
+  toggleKeyEnabled: 0
 --- !u!1 &658373843
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,6 +945,7 @@ MonoBehaviour:
   spawnKey: 113
   spawnKeyEnabled: 1
   animal: {fileID: 5795516542036528009, guid: 87e1212ebf7e58a4885d20a771d76613, type: 3}
+  spawnRangeX: 20
 --- !u!1 &1558283209
 GameObject:
   m_ObjectHideFlags: 0
