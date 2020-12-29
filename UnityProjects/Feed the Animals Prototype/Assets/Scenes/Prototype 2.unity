@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleKey: 101
-  toggleKeyEnabled: 0
+  toggleKeyEnabled: 1
 --- !u!1 &658373843
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +946,8 @@ MonoBehaviour:
   spawnKeyEnabled: 1
   animal: {fileID: 5795516542036528009, guid: 87e1212ebf7e58a4885d20a771d76613, type: 3}
   spawnRangeX: 20
+  spawnInterval: 1.5
+  spawnTimeEnabled: 1
 --- !u!1 &1558283209
 GameObject:
   m_ObjectHideFlags: 0
