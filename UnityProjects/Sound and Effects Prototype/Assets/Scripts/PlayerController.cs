@@ -1,11 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class PlayerController : MonoBehaviour
 {
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpForce = 10;
     public float gravityModifier = 10;
+    public bool gameOver;
     private Rigidbody _rigidbody;
     private bool _isOnGround = true;
 
@@ -22,11 +24,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (_isOnGround && Input.GetKeyDown(jumpKey)) Jump();
+        if (!gameOver && _isOnGround && Input.GetKeyDown(jumpKey)) Jump();
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        _isOnGround = true;
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            _isOnGround = true;
+        } else if (other.gameObject.CompareTag("Obstacle"))
+        {
+            gameOver = true;
+        }
     }
 }
