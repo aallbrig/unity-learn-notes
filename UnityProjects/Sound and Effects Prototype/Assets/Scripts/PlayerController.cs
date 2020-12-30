@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,10 +7,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10;
     public float gravityModifier = 10;
     private Rigidbody _rigidbody;
+    private bool _isOnGround = true;
 
     private void Jump()
     {
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        _isOnGround = false;
     }
     private void Start()
     {
@@ -20,9 +23,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(jumpKey))
-        {
-            Jump();
-        }
+        if (_isOnGround && Input.GetKeyDown(jumpKey)) Jump();
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        _isOnGround = true;
     }
 }
