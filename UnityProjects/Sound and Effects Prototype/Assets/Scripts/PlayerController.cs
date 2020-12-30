@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     {
         Physics.gravity *= gravityModifier;
         _rigidbody = GetComponent<Rigidbody>();
-        Jump();
     }
 
     private void Update()
