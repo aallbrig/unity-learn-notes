@@ -1893,7 +1893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpKey: 32
-  jumpForce: 1000
+  jumpForce: 10
+  gravityModifier: 1
 --- !u!1001 &2013726421
 PrefabInstance:
   m_ObjectHideFlags: 0
