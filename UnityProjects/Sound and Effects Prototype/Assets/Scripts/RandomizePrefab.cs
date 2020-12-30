@@ -6,12 +6,8 @@ using Random = UnityEngine.Random;
 public class RandomizePrefab : MonoBehaviour
 {
     [Header("Location of prefabs")] public List<GameObject> targetGameObjects;
-
     private readonly List<GameObject> _listOfPrefabs = new List<GameObject>();
     
-    private void SetActiveIndex(int index)
-    {
-    }
     private void Start()
     {
         if (targetGameObjects == null) return;
