@@ -3,17 +3,18 @@
 public class Enemy : MonoBehaviour
 {
     public float speed = 5;
-    public GameObject player;
+    private GameObject _player;
     private Rigidbody _rigidbody;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _player = GameObject.Find("Player");
     }
 
     private void Update()
     {
-        var lookDirection = (player.transform.position - transform.position).normalized;
+        var lookDirection = (_player.transform.position - transform.position).normalized;
 
         _rigidbody.AddForce(lookDirection * speed);
     }
