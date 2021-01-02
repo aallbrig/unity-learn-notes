@@ -15,7 +15,10 @@ public class StopOnGameOver : MonoBehaviour
 
     private void Update()
     {
-        if (_playerController.gameOver && _moveConstantly.canMove) _moveConstantly.canMove = false;
-        if (_playerController.gameOver && _obstacleSpawner.canSpawn) _obstacleSpawner.canSpawn = false;
+        if (!_playerController.gameOver) return;
+        if (_moveConstantly.canMove) _moveConstantly.canMove = false;
+        if (_obstacleSpawner.canSpawn) _obstacleSpawner.canSpawn = false;
+        var obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (var go in obstacles) Destroy(go);
     }
 }
