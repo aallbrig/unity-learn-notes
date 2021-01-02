@@ -14,6 +14,8 @@ public class PlayerControllerX : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
+    private float _upperBounds = 15;
+    private float _lowerBounds = 2;
 
 
     private void Jump()
@@ -30,8 +32,10 @@ public class PlayerControllerX : MonoBehaviour
 
     private void Update()
     {
-        // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && !gameOver) Jump();
+        if (gameOver) return;
+        var isPlayerBelowGround = transform.position.y < _lowerBounds;
+        var isPlayerAboveViewport = transform.position.y > _upperBounds;
+        if (isPlayerBelowGround || (Input.GetKey(KeyCode.Space) && !isPlayerAboveViewport)) Jump();
     }
 
     private void OnCollisionEnter(Collision other)
