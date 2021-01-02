@@ -2,6 +2,7 @@
 
 public class PlayerController : MonoBehaviour
 {
+    // Golly, this script seems real busy. IMO, after this, I'll try to decompose these types of scripts more
     public KeyCode jumpKey = KeyCode.Space;
     public float jumpForce = 10;
     public float gravityModifier = 10;
