@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7328170618114036778, guid: 01fccf2f5a9b9954eb31531b1048a471,
     type: 3}
-  powerupPrefab: {fileID: 6629431593621939248, guid: b07e1bc2c1426344baceea9b3db3faf9,
+  powerupPrefab: {fileID: 8351627020798113104, guid: aebb435562c30b34a8d8e789bb6a0ca5,
     type: 3}
 --- !u!4 &993074319
 Transform:
