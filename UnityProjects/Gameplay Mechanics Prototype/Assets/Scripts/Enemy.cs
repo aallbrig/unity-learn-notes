@@ -13,8 +13,8 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _rigidbody.AddForce(
-            (player.transform.position - transform.position).normalized * speed
-        );
+        var lookDirection = (player.transform.position - transform.position).normalized;
+
+        _rigidbody.AddForce(lookDirection * speed);
     }
 }
