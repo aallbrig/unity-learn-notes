@@ -1,33 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveLeftX : MonoBehaviour
 {
     public float speed;
-    private PlayerControllerX playerControllerScript;
-    private float leftBound = -10;
+    public float leftBound = -10;
+    private PlayerControllerX _playerControllerScript;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerControllerX>();
+        _playerControllerScript = GameObject.Find("Player").GetComponent<PlayerControllerX>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // If game is not over, move to the left
-        if (playerControllerScript.gameOver)
-        {
-            transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
-        }
+        if (!_playerControllerScript.gameOver)
+          transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
 
         // If object goes off screen that is NOT the background, destroy it
         if (transform.position.x < leftBound && !gameObject.CompareTag("Background"))
-        {
-            Destroy(gameObject);
-        }
-
+          Destroy(gameObject);
     }
 }

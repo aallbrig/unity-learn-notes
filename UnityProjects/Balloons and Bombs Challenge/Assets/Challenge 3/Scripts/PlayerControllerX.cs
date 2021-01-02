@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerControllerX : MonoBehaviour
 {
@@ -47,7 +45,6 @@ public class PlayerControllerX : MonoBehaviour
             Debug.Log("Game Over!");
             Destroy(other.gameObject);
         } 
-
         // if player collides with money, fireworks
         else if (other.gameObject.CompareTag("Money"))
         {
@@ -56,7 +53,5 @@ public class PlayerControllerX : MonoBehaviour
             Destroy(other.gameObject);
 
         }
-
     }
-
 }
