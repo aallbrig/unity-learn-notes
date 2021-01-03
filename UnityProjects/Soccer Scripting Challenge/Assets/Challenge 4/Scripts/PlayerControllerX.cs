@@ -9,10 +9,12 @@ public class PlayerControllerX : MonoBehaviour
 
     public bool hasPowerup;
     public GameObject powerupIndicator;
+    public ParticleSystem smokeParticles;
     public int powerUpDuration = 5;
 
     private const float NormalStrength = 10; // how hard to hit enemy without powerup
     private const float PowerupStrength = 25; // how hard to hit enemy with powerup
+    private const float SpacebarMultiplier = 4;
     
     // Coroutine to count down powerup duration
     private IEnumerator PowerupCooldown()
@@ -31,12 +33,21 @@ public class PlayerControllerX : MonoBehaviour
 
     private void Update()
     {
-        // Add force to player in direction of the focal point (and camera)
-        float verticalInput = Input.GetAxis("Vertical");
-        _playerRigidbody.AddForce(_focalPoint.transform.forward * verticalInput * Speed * Time.deltaTime); 
-
-        // Set powerup indicator position to beneath player
+        smokeParticles.transform.position = transform.position + new Vector3(0, -0.6f, 0);
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+
+        var verticalInput = Input.GetAxis("Vertical");
+        var forwardMovement = _focalPoint.transform.forward *  Speed * Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _playerRigidbody.AddForce(forwardMovement * SpacebarMultiplier, ForceMode.Impulse);
+            smokeParticles.Play();
+        }
+        else
+        {
+            _playerRigidbody.AddForce(forwardMovement * verticalInput);
+        }
     }
 
     // If Player collides with powerup, activate powerup
