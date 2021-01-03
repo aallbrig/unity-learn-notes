@@ -3,7 +3,7 @@
 public class RandomizePosition : MonoBehaviour
 {
     private const float XRange = 4;
-    private const float YStart = -1;
+    private const float YStart = 0;
 
     private void Start()
     {
