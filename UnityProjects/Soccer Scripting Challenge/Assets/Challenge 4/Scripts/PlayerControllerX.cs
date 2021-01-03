@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerControllerX : MonoBehaviour
 {
     private Rigidbody _playerRigidbody;
-    private const float Speed = 500;
+    private const float Speed = 700;
     private GameObject _focalPoint;
 
     public bool hasPowerup;
@@ -14,7 +14,7 @@ public class PlayerControllerX : MonoBehaviour
 
     private const float NormalStrength = 10; // how hard to hit enemy without powerup
     private const float PowerupStrength = 25; // how hard to hit enemy with powerup
-    private const float SpacebarMultiplier = 4;
+    private const float SpacebarMultiplier = 1.5f;
     
     // Coroutine to count down powerup duration
     private IEnumerator PowerupCooldown()
