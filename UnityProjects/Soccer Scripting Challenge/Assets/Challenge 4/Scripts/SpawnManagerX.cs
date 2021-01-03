@@ -39,7 +39,7 @@ public class SpawnManagerX : MonoBehaviour
 
     private void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         if (enemyCount == 0) SpawnEnemyWave(waveCount);
     }
 
