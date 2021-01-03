@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private const int PointRewards = 1;
+    [SerializeField]
+    private List<ParticleSystem> explosionParticles;
+    [SerializeField]
+    private int pointRewards = 1;
     private GameManager _gameManager;
 
     private void Start()
@@ -13,7 +17,8 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
        Destroy(gameObject);
-       _gameManager.UpdateScore(PointRewards);
+       Instantiate(explosionParticles[Random.Range(0, explosionParticles.Count)], transform.position, transform.rotation);
+       _gameManager.UpdateScore(pointRewards);
     }
 
     private void OnTriggerEnter(Collider other)
