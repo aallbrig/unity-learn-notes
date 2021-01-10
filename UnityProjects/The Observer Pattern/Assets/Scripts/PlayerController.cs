@@ -124,7 +124,6 @@ public class PlayerController : MonoBehaviour
     {
         yield return shieldTimeOut;
         shield.SetActive(false);
-        
     }
 
     #endregion
