@@ -78,12 +78,14 @@ public class PlayerController : MonoBehaviour
 
     private void FireProjectile()
     {
+        DisableProjectile();
+
         Vector2 spawnPosition = availableBullet.transform.position;
 
         ProjectileController projectile =
             Instantiate(projectilePrefab, spawnPosition, Quaternion.AngleAxis(90, Vector3.forward));
 
-       projectile.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        projectile.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
         projectile.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
         projectile.isPlayers = true;
         projectile.projectileSpeed = 4;
