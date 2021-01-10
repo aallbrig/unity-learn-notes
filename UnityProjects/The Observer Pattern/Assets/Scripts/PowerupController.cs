@@ -40,7 +40,7 @@ public class PowerupController :MonoBehaviour
             player.EnableShield();
         }
        
-       Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     #endregion

@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         availableBullet.SetActive(projectileEnabled);
     }
 
-    public void DisableProjectile()
+    private void DisableProjectile()
     {
         projectileEnabled = false;
         availableBullet.SetActive(projectileEnabled);
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void FireProjectile()
     {
-        DisableProjectile();
+        if (!projectileEnabled) return;
 
         Vector2 spawnPosition = availableBullet.transform.position;
 
@@ -90,6 +90,8 @@ public class PlayerController : MonoBehaviour
         projectile.isPlayers = true;
         projectile.projectileSpeed = 4;
         projectile.projectileDirection = Vector2.up;
+        projectile.ProjectileOutOfBounds += EnableProjectile;
+        DisableProjectile();
     }
 
     #endregion
