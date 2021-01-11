@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
+    private GameSceneController gameSceneController;
 	#region Field Declarations
 
 	[Header("UI Components")]
@@ -52,4 +53,15 @@ public class HUDController : MonoBehaviour
     }
 
     #endregion
+
+    private void Start()
+    {
+        gameSceneController = FindObjectOfType<GameSceneController>();
+        gameSceneController.ScoreUpdatedOnKill += GameSceneControllerOnScoreUpdatedOnKill;
+    }
+
+    private void GameSceneControllerOnScoreUpdatedOnKill(int points)
+    {
+        UpdateScore(points);
+    }
 }

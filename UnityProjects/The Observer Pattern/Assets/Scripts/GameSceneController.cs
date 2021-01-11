@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameSceneController : MonoBehaviour
 {
+    public event EnemyDestroyedHandler ScoreUpdatedOnKill;
     #region Field Declarations
 
     [Header("Enemy & Power Prefabs")]
@@ -97,11 +98,20 @@ public class GameSceneController : MonoBehaviour
             enemy.speed = currentLevel.enemySpeed;
             enemy.shotdelayTime = currentLevel.enemyShotDelay;
             enemy.angerdelayTime = currentLevel.enemyAngerDelay;
- 
+            
+            enemy.EnemyDestroyed += EnemyOnEnemyDestroyed;
+            
             yield return wait;
         }
     }
-    
+
+    private void EnemyOnEnemyDestroyed(int points)
+    {
+        totalPoints += points;
+        
+        ScoreUpdatedOnKill?.Invoke(totalPoints);
+    }
+
     private IEnumerator SpawnPowerUp()
     {
         while (true)

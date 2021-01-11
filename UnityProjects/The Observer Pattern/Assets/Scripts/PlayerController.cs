@@ -22,8 +22,13 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        shieldTimeOut = new WaitForSeconds(shieldDuration);
-        EnableShield();
+        var gameSceneController = FindObjectOfType<GameSceneController>();
+        gameSceneController.ScoreUpdatedOnKill += GameSceneControllerOnScoreUpdatedOnKill;
+    }
+
+    private void GameSceneControllerOnScoreUpdatedOnKill(int points)
+    {
+        EnableProjectile();
     }
 
     #endregion
@@ -90,7 +95,9 @@ public class PlayerController : MonoBehaviour
         projectile.isPlayers = true;
         projectile.projectileSpeed = 4;
         projectile.projectileDirection = Vector2.up;
+
         projectile.ProjectileOutOfBounds += EnableProjectile;
+
         DisableProjectile();
     }
 

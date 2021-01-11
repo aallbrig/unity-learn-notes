@@ -34,7 +34,7 @@ public class PowerupController :MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (powerType == PowerType.Shield)
+        if (powerType == PowerType.Shield && collision.gameObject.CompareTag("Player"))
         {
             var player = collision.gameObject.GetComponent<PlayerController>();
             player.EnableShield();
