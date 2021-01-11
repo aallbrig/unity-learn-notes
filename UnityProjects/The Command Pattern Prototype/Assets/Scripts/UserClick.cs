@@ -4,7 +4,7 @@ using UnityEngine;
 public class UserClick : MonoBehaviour
 {
     private Camera _camera;
-    private List<ICommand> actionQueue = new List<ICommand>();
+
     private void Start()
     {
         _camera = Camera.main;
@@ -21,7 +21,7 @@ public class UserClick : MonoBehaviour
                     var cube = hit.collider.gameObject;
                     var randomColor = new Color(Random.value, Random.value, Random.value);
                     var click = new ClickCommand(cube, randomColor);
-                    actionQueue.Add(click);
+                    CommandManager.Add(click);
                     click.Execute();
                 }
             }
