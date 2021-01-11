@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDController : MonoBehaviour
+public class HUDController : MonoBehaviour, IEndGameObserver
 {
-    private GameSceneController gameSceneController;
 	#region Field Declarations
 
 	[Header("UI Components")]
@@ -17,6 +16,8 @@ public class HUDController : MonoBehaviour
     [Space]
     private Image[] shipImages;
 
+    private GameSceneController gameSceneController;
+
     #endregion
 
     #region Startup
@@ -26,42 +27,51 @@ public class HUDController : MonoBehaviour
         statusText.gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        gameSceneController = FindObjectOfType<GameSceneController>();
+
+        gameSceneController.AddObserver(this);
+
+        gameSceneController.ScoreUpdatedOnKill += GameSceneController_ScoreUpdatedOnKill;
+        gameSceneController.LifeLost += HideShip;
+    }
+
+    private void GameSceneController_ScoreUpdatedOnKill(int pointValue)
+    {
+        UpdateScore(pointValue);
+    }
+
     #endregion
 
-    #region Public methods
+    #region Display Methods
 
-    public void UpdateScore(int score)
+    private void UpdateScore(int score)
     {
         scoreText.text = score.ToString("D5");
     }
 
-    public void ShowStatus(string newStatus)
+    private void ShowStatus(string newStatus)
     {
         statusText.gameObject.SetActive(true);
         StartCoroutine(statusText.ChangeStatus(newStatus));
     }
 
-    public void HideShip(int imageIndex)
+    private void HideShip(int imageIndex)
     {
         shipImages[imageIndex].gameObject.SetActive(false);
     }
 
-    public void ResetShips()
+    private void ResetShips()
     {
         foreach (Image ship in shipImages)
             ship.gameObject.SetActive(true);
     }
 
+    public void Notify()
+    {
+        ShowStatus("Game Over");
+    }
+
     #endregion
-
-    private void Start()
-    {
-        gameSceneController = FindObjectOfType<GameSceneController>();
-        gameSceneController.ScoreUpdatedOnKill += GameSceneControllerOnScoreUpdatedOnKill;
-    }
-
-    private void GameSceneControllerOnScoreUpdatedOnKill(int points)
-    {
-        UpdateScore(points);
-    }
 }

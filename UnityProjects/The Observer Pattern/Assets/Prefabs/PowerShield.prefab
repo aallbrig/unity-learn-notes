@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1521001664056194781}
   - component: {fileID: 202133824323042776}
   m_Layer: 12
-  m_Name: PowerUp
+  m_Name: PowerShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,8 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82aedf5642fbc4bbba74ec00120a793e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
-  targetPos: {x: 0, y: 0}
   explosion: {fileID: 9208499893292268788, guid: a09d8ef6884854d1cb1f39591fa94540,
     type: 3}
   powerType: 0
