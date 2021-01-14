@@ -165,6 +165,14 @@ MonoBehaviour:
   g: {fileID: 0}
   r: {fileID: 0}
   t: {fileID: 0}
+  ints: 6f000000
+  floats: []
+  cl:
+    i: 0
+    f: 0
+  str:
+    i: 0
+    f: 0
 --- !u!1001 &9062351561694588342
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -37,4 +37,11 @@ public class Test : MonoBehaviour
         public int i;
         public float f;
     }
+
+    private void OnValidate()
+    {
+        // Executes whenever there are any updates to the serializable fields in the Unity editor
+        PlayerPrefs.SetInt("test int", 34);
+        PlayerPrefs.Save();
+    }
 }
