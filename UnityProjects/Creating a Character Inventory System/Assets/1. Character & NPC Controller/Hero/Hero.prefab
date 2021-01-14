@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4208779191299466}
-  - component: {fileID: 5513588000566864981}
+  - component: {fileID: 403828269061789814}
   m_Layer: 0
   m_Name: CharacterInventory
   m_TagString: Untagged
@@ -92,7 +92,7 @@ Transform:
   m_Father: {fileID: 4621171860792138}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5513588000566864981
+--- !u!114 &403828269061789814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1448752325505570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dfc2c3b40b9646409754b976ca641e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bab90ff9f511cb4eb04ea996414e404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charStats: {fileID: 114162175725589962}
@@ -110,7 +110,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  InventoryDisplayHolder: {fileID: 1644408783840310}
+  InventoryDisplayHolder: {fileID: 0}
   inventoryDisplaySlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterDefinition: {fileID: 11400000, guid: b37eaac7f3c70eb459a6c28b03b710bd,
     type: 2}
-  charInv: {fileID: 0}
+  charInv: {fileID: 403828269061789814}
   characterWeaponSlot: {fileID: 1674994523853316}
 --- !u!54 &54164056968236600
 Rigidbody:

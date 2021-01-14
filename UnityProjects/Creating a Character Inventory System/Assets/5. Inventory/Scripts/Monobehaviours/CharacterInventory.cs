@@ -38,7 +38,7 @@ public class CharacterInventory : MonoBehaviour
     }
     #endregion
 
-    void Update()
+    private void Update()
     {
         #region Watch for Hotbar Keypresses - Called by Character Controller Later
         //Checking for a hotbar key to be pressed
@@ -216,20 +216,11 @@ public class CharacterInventory : MonoBehaviour
         {
             hotBarDisplayHolders[itemForHotBar.hotBarSlot - 1].GetComponentInChildren<Text>().text = itemForHotBar.stackSize.ToString();
         }
-
-        increaseCount = false;
     }
 
     void DisplayInventory()
     {
-        if (InventoryDisplayHolder.activeSelf == true)
-        {
-            InventoryDisplayHolder.SetActive(false);
-        }
-        else
-        {
-            InventoryDisplayHolder.SetActive(true);
-        }
+        InventoryDisplayHolder.SetActive(!InventoryDisplayHolder.activeSelf);
     }
 
     void FillInventoryDisplay()
