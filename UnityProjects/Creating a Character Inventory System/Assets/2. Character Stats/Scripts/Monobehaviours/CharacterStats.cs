@@ -87,12 +87,13 @@ public class CharacterStats : MonoBehaviour
     // TODO: Add functions to change equipment
     public void ChangeWeapon(ItemPickUp weaponPickUp)
     {
+        // Change sprite and stats of current weapons
 
     }
 
     public void ChangeArmor(ItemPickUp armorPickUp)
     {
-
+        // Change sprite and stats of current armor
     }
     #endregion
 

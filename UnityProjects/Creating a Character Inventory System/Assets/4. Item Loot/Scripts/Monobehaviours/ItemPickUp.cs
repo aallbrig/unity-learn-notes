@@ -10,7 +10,7 @@ public class ItemPickUp : MonoBehaviour
     public CharacterStats charStats;
     CharacterInventory charInventory;
 
-    GameObject foundStats;
+    private GameObject _player;
 
     #region Constructors
     public ItemPickUp()
@@ -21,14 +21,14 @@ public class ItemPickUp : MonoBehaviour
 
     void Start()
     {
-        foundStats = GameObject.FindGameObjectWithTag("Player");
-        charStats = foundStats.GetComponent<CharacterStats>();
+        _player = GameObject.FindGameObjectWithTag("Player");
+        charStats = _player.GetComponent<CharacterStats>();
     }
 
     void StoreItem()
     {
         // TODO: Call store item
-        //charInventory.StoreItem();
+        // charInventory.StoreItem();
     }
 
     public void UseItem()
@@ -47,11 +47,11 @@ public class ItemPickUp : MonoBehaviour
                 break;
             case ItemTypeDefinitions.WEAPON:
                 // TODO: Call change weapon
-                //charStats.ChangeWeapon();
+                // charStats.ChangeWeapon();
                 break;
             case ItemTypeDefinitions.ARMOR:
                 // TODO: Call change armor
-                //charStats.ChangeArmor();
+                // charStats.ChangeArmor();
                 break;
         }
     }
