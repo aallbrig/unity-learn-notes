@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 114680025013929176}
   - component: {fileID: 114688505134421088}
   - component: {fileID: 114103006396758908}
+  - component: {fileID: 3420680575852763181}
   m_Layer: 9
   m_Name: Hero
   m_TagString: Player
@@ -456,3 +457,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff7b463751c4a431190749bc9e70e29c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3420680575852763181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987677436510516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 723d4cabe6bbf9b4aa1ff23ad24c4a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterStats: {fileID: 0}
+  levelText: {fileID: 0}
+  xpText: {fileID: 0}
