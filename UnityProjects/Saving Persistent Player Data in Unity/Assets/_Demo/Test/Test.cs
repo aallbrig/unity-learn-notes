@@ -38,10 +38,14 @@ public class Test : MonoBehaviour
         public float f;
     }
 
-    private void OnValidate()
+    private void OnEnable()
     {
-        // Executes whenever there are any updates to the serializable fields in the Unity editor
-        PlayerPrefs.SetInt("test int", 34);
+        JsonUtility.FromJsonOverwrite(PlayerPrefs.GetString("json test"), this);
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetString("json test", JsonUtility.ToJson(this, true));
         PlayerPrefs.Save();
     }
 }

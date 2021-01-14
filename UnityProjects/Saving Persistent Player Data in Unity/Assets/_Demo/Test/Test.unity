@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   i: 0
-  f: 0
+  f: 6.66
   s: 
   v: {x: 0, y: 0, z: 0}
   c: {r: 0, g: 0, b: 0, a: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   g: {fileID: 0}
   r: {fileID: 0}
   t: {fileID: 0}
-  ints: 6f000000
+  ints: 84000000
   floats: []
   cl:
     i: 0
@@ -184,6 +184,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350827915894080111, guid: 1c3b26d1437ff5a4f8021ec989bf13d2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5758569282837912136, guid: 1c3b26d1437ff5a4f8021ec989bf13d2,
         type: 3}
