@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Allbright Web Services
   productName: Game managers, Loaders, and the Game Loop
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
