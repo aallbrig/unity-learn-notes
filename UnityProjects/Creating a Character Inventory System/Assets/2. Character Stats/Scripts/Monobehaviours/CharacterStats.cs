@@ -84,16 +84,20 @@ public class CharacterStats : MonoBehaviour
     #endregion
 
     #region Weapon and Armor Change
-    // TODO: Add functions to change equipment
     public void ChangeWeapon(ItemPickUp weaponPickUp)
     {
-        // Change sprite and stats of current weapons
-
+        if (!characterDefinition.UnEquipWeapon(weaponPickUp, charInv, characterWeaponSlot))
+        {
+            characterDefinition.EquipWeapon(weaponPickUp, charInv, characterWeaponSlot);
+        }
     }
 
     public void ChangeArmor(ItemPickUp armorPickUp)
     {
-        // Change sprite and stats of current armor
+        if (!characterDefinition.UnEquipArmor(armorPickUp, charInv))
+        {
+            characterDefinition.EquipArmor(armorPickUp, charInv);
+        }
     }
     #endregion
 
