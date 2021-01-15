@@ -2,13 +2,13 @@
 
 public class MainMenu : MonoBehaviour
 {
-    // Functions to play fade in/out animations
+    public Events.EventFadeComplete onMainMenuFadeComplete;
     [SerializeField] private Animation _mainMenuAnimator;
 
     #region FadeIn
     [SerializeField] private AnimationClip _fadeInAnimation;
 
-    public void PlayFadeIn() => PlayClip(_fadeInAnimation);
+    private void PlayFadeIn() => PlayClip(_fadeInAnimation);
 
     public void OnFadeInStart()
     {
@@ -17,15 +17,15 @@ public class MainMenu : MonoBehaviour
 
     public void OnFadeInComplete()
     {
-        Debug.LogWarning("On fade in complete");
         UIManager.Instance.SetDummyCameraActive(true);
+        onMainMenuFadeComplete.Invoke(false);
     }
     #endregion
 
     #region FadeOut
     [SerializeField] private AnimationClip _fadeOutAnimation;
 
-    public void PlayFadeOut() => PlayClip(_fadeOutAnimation);
+    private void PlayFadeOut() => PlayClip(_fadeOutAnimation);
 
     public void OnFadeOutStart()
     {
@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnFadeOutComplete()
     {
-        Debug.LogWarning("On fade out complete");
+        onMainMenuFadeComplete.Invoke(true);
     }
     #endregion
 
@@ -51,6 +51,9 @@ public class MainMenu : MonoBehaviour
         if (prevState == GameManager.GameState.Pregame && currentState == GameManager.GameState.Running)
         {
             PlayFadeOut();
+        } else if (prevState != GameManager.GameState.Pregame && currentState == GameManager.GameState.Pregame)
+        {
+            PlayFadeIn();
         }
     }
 

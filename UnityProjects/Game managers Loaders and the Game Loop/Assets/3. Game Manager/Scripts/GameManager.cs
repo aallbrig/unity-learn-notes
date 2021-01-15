@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-[Serializable]
-public class EventGameState : UnityEvent<GameManager.GameState, GameManager.GameState> {};
 
 public class GameManager : Singleton<GameManager>
 {
-    public EventGameState OnGameStateChanged;
+    public Events.EventGameState OnGameStateChanged;
     // Keep track of game state
     public enum GameState
     {
@@ -31,6 +27,16 @@ public class GameManager : Singleton<GameManager>
     private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
 
     public void StartGame() => LoadLevel("Main");
+
+    public void RestartGame()
+    {
+        UpdateState(GameState.Pregame);
+    }
+
+    public void QuitGame() => Application.Quit();
+
+    public void TogglePauseGame() =>
+        UpdateState(_gameState == GameState.Running ? GameState.Paused : GameState.Running);
 
     public void LoadLevel(string levelName)
     {
@@ -70,8 +76,14 @@ public class GameManager : Singleton<GameManager>
         switch (_gameState)
         {
             case GameState.Pregame:
+                Time.timeScale = 1.0f;
+                break;
             case GameState.Running:
+                Time.timeScale = 1.0f;
+                break;
             case GameState.Paused:
+                Time.timeScale = 0f;
+                break;
             default:
                 break;
         }
@@ -102,14 +114,31 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    private void HandleMainMenuFadeOut(bool isFadeOut)
+    {
+        if (!isFadeOut)
+        {
+            UnloadLevel(_currentLevelName);
+        }
+    }
+
     private void Start()
     {
         // This game object should never be destroyed
         DontDestroyOnLoad(gameObject);
         InstantiateSystemPrefabs();
+        
+        UIManager.Instance.OnMainMenuFadeComplete.AddListener(HandleMainMenuFadeOut);
+    }
 
-        // Test that load level method works
-        // LoadLevel("Main");
+    private void Update()
+    {
+        if (_gameState == GameState.Pregame) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseGame();
+        }
     }
 
     protected override void OnDestroy()
