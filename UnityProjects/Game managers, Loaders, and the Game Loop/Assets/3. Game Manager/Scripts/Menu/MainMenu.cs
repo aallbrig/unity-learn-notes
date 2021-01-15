@@ -45,4 +45,17 @@ public class MainMenu : MonoBehaviour
         _mainMenuAnimator.clip = clip;
         _mainMenuAnimator.Play();
     }
+
+    private void HandleGameStateChange(GameManager.GameState prevState, GameManager.GameState currentState)
+    {
+        if (prevState == GameManager.GameState.Pregame && currentState == GameManager.GameState.Running)
+        {
+            PlayFadeOut();
+        }
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChange);
+    }
 }

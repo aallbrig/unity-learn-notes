@@ -12,9 +12,11 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentGameState != GameManager.GameState.Pregame) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _mainMenu.PlayFadeOut();
+            GameManager.Instance.StartGame();
         }
     }
 }
