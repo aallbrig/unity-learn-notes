@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour, IGameStateChange
 {
     public delegate void MainMenuFadeComplete(bool isFadeIn);
+    public static event MainMenuFadeComplete OnMainMenuFadeStart;
     public static event MainMenuFadeComplete OnMainMenuFadeComplete;
 
     [SerializeField] private Animation animator;
@@ -15,9 +16,19 @@ public class MainMenu : MonoBehaviour, IGameStateChange
     [SerializeField] private Button options;
     [SerializeField] private Button credits;
 
+    public void OnFadeInStart()
+    {
+        OnMainMenuFadeStart?.Invoke(true);
+    }
+
     public void OnFadeInComplete()
     {
         OnMainMenuFadeComplete?.Invoke(true);
+    }
+
+    public void OnFadeOutStart()
+    {
+        OnMainMenuFadeStart?.Invoke(false);
     }
 
     public void OnFadeOutComplete()
