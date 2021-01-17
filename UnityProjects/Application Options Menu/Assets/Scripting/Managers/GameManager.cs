@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
+public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRandomBattleTriggered
 {
     public delegate void GameStateChange(GameState prevState, GameState newState);
     public static event GameStateChange OnGameStateChange;
@@ -17,19 +16,16 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
 
     public enum GameState
     {
-        Pregame, Loading, Running, Paused
+        Pregame, Loading, Running, Paused, Battle
     }
 
-    public void StartGame() => LoadLevel("Main");
-    public void RestartGame()
-    {
-        Debug.Log("Restarting level");
-    }
+    public void StartGame() => LoadLevel("Main", GameState.Running);
+    public void RestartGame() => UpdateGameState(GameState.Pregame);
     public void QuitGame() => Application.Quit();
     public void TogglePauseGame() =>
         UpdateGameState(_currentGameState == GameState.Running ? GameState.Paused : GameState.Running);
 
-    private void LoadLevel(string levelName)
+    private void LoadLevel(string levelName, GameState desiredGameState)
     {
         var asyncOp = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
         if (asyncOp == null)
@@ -40,6 +36,10 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
         
         _loadOperations.Add(asyncOp);
         asyncOp.completed += OnLoadOperationComplete;
+        asyncOp.completed += (AsyncOperation op) =>
+        {
+            if (_loadOperations.Count == 0) UpdateGameState(desiredGameState);
+        };
         _currentLevelName = levelName;
     }
 
@@ -48,7 +48,6 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
         if (!_loadOperations.Contains(asyncOp)) return;
 
         _loadOperations.Remove(asyncOp);
-        if (_loadOperations.Count == 0) UpdateGameState(GameState.Running);
     }
 
     private void UnloadLevel(string levelName)
@@ -81,7 +80,11 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
             case GameState.Loading:
             case GameState.Pregame:
             case GameState.Paused:
+                Time.timeScale = 0;
+                break;
             case GameState.Running:
+                Time.timeScale = 1;
+                break;
             default:
                 break;
         }
@@ -100,6 +103,7 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
 
         // Register for events
         EventsBroker.Instance.SubscribeToMainMenuFadeComplete(this);
+        EventsBroker.Instance.SubscribeToRandomBattleTriggered(this);
     }
 
     protected override void OnDestroy()
@@ -119,8 +123,15 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete
         if (!isFadeIn) return;
         
         // Unload the level if fading in, which means the main menu is done loading in
-        UnloadLevel(_currentLevelName);
+        if (_currentLevelName != null) UnloadLevel(_currentLevelName);
     }
 
+    public void Notify()
+    {
+        // Random battle triggered
+        UnloadLevel("Main");
+        LoadLevel("Battle", GameState.Battle);
+    }
     #endregion
+
 }

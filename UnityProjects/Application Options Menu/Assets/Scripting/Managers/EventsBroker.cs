@@ -4,6 +4,7 @@ public class EventsBroker : Singleton<EventsBroker>
 {
     private readonly List<IGameStateChange> _gameStateChangeSubscribers = new List<IGameStateChange>();
     private readonly List<IMainMenuFadeComplete> _mainMenuFadeCompleteSubscribers = new List<IMainMenuFadeComplete>();
+    private readonly List<IRandomBattleTriggered> _randomBattleTriggeredSubscribers = new List<IRandomBattleTriggered>();
     // Pub/sub broker
     // List of subjects (that implement INotify)
     // Subjects can register themselves
@@ -24,7 +25,13 @@ public class EventsBroker : Singleton<EventsBroker>
         _mainMenuFadeCompleteSubscribers.Remove(subscriber);
     private void OnMainMenuFadeComplete(bool isFadeIn) =>
         _mainMenuFadeCompleteSubscribers.ForEach(sub => sub.Notify(isFadeIn));
-    
+
+    public void SubscribeToRandomBattleTriggered(IRandomBattleTriggered subscriber) =>
+        _randomBattleTriggeredSubscribers.Add(subscriber);
+    public void UnsubscribeToRandomBattleTriggered(IRandomBattleTriggered subscriber) =>
+        _randomBattleTriggeredSubscribers.Remove(subscriber);
+    private void OnRandomBattleTriggered() =>
+        _randomBattleTriggeredSubscribers.ForEach(sub => sub.Notify());
 
     #region Monobehaviour Functions
 
@@ -32,6 +39,7 @@ public class EventsBroker : Singleton<EventsBroker>
     {
         GameManager.OnGameStateChange += OnGameStateChange;
         UIManager.OnMainMenuFadeComplete += OnMainMenuFadeComplete;
+        RandomBattleManager.OnRandomBattleTriggered += OnRandomBattleTriggered;
     }
 
     protected override void OnDestroy()
@@ -40,6 +48,7 @@ public class EventsBroker : Singleton<EventsBroker>
 
         GameManager.OnGameStateChange -= OnGameStateChange;
         UIManager.OnMainMenuFadeComplete -= OnMainMenuFadeComplete;
+        RandomBattleManager.OnRandomBattleTriggered -= OnRandomBattleTriggered;
     }
 
     #endregion

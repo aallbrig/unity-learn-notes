@@ -16,7 +16,6 @@ public class UIManager : Singleton<UIManager>, IGameStateChange
         if (!isFadeIn)
         {
             dummyCamera.gameObject.SetActive(false);
-            mainMenu.gameObject.SetActive(false);
         }
         else
         {
@@ -31,6 +30,7 @@ public class UIManager : Singleton<UIManager>, IGameStateChange
         OnMainMenuFadeComplete?.Invoke(isFadeIn);
 
         if (isFadeIn) dummyCamera.gameObject.SetActive(true);
+        else mainMenu.gameObject.SetActive(false);
     }
 
     #region Monobehaviour Functions
@@ -64,7 +64,10 @@ public class UIManager : Singleton<UIManager>, IGameStateChange
 
     public void Notify(GameManager.GameState prevState, GameManager.GameState currentState)
     {
+        // Enable/disable pause menu based on if in certain game states
         _listenForPause = currentState == GameManager.GameState.Running || currentState == GameManager.GameState.Paused;
+        
+        // Main menu and pause menu are set to active based on
         pauseMenu.gameObject.SetActive(currentState == GameManager.GameState.Paused);
     }
 }
