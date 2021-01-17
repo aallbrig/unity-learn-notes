@@ -1,5 +1,8 @@
-﻿public interface ICommand
+﻿public delegate void Command();
+public interface ICommand
 {
+    event Command OnCommandStart;
+    event Command OnCommandComplete;
+
     void Execute();
-    void Undo();
 }

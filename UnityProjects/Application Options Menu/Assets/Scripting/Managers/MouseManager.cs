@@ -7,6 +7,7 @@ public class EventVector3 : UnityEvent<Vector3> { }
 public class MouseManager : Singleton<MouseManager>
 {
     public EventVector3 OnClickEnvironment;
+    public EventVector3 OnEnqueueClickEnvironment;
     private Camera _camera;
 
     private void Start()
@@ -22,11 +23,7 @@ public class MouseManager : Singleton<MouseManager>
             if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), out var hit, 50))
             {
                 Debug.LogWarning(hit);
-                OnClickEnvironment?.Invoke(hit.point);
-            }
-            else
-            {
-                Debug.LogWarning("no hit");
+                (Input.GetKey(KeyCode.LeftShift) ? OnEnqueueClickEnvironment : OnClickEnvironment)?.Invoke(hit.point);
             }
         }
     }

@@ -7,8 +7,13 @@ public class PlayerController : MonoBehaviour
 
     public void SetDestination(Vector3 destination)
     {
-        var cmd = new Move(_agent, destination);
-        cmd.Execute();
+        CommandManager.Instance.Clear();
+        CommandManager.Instance.Add(new MoveCommand(_agent, destination, this));
+    }
+
+    public void EnqueueDestination(Vector3 destination)
+    {
+        CommandManager.Instance.Add(new MoveCommand(_agent, destination, this));
     }
 
     private void Start()
