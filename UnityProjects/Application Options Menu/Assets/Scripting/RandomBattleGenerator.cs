@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RandomBattleManager : Singleton<RandomBattleManager>
+public class RandomBattleGenerator : Singleton<RandomBattleGenerator>
 {
     public delegate void RandomBattleTriggered();
     public static event RandomBattleTriggered OnRandomBattleTriggered;

@@ -39,7 +39,7 @@ public class EventsBroker : Singleton<EventsBroker>
     {
         GameManager.OnGameStateChange += OnGameStateChange;
         UIManager.OnMainMenuFadeComplete += OnMainMenuFadeComplete;
-        RandomBattleManager.OnRandomBattleTriggered += OnRandomBattleTriggered;
+        RandomBattleGenerator.OnRandomBattleTriggered += OnRandomBattleTriggered;
     }
 
     protected override void OnDestroy()
@@ -48,7 +48,7 @@ public class EventsBroker : Singleton<EventsBroker>
 
         GameManager.OnGameStateChange -= OnGameStateChange;
         UIManager.OnMainMenuFadeComplete -= OnMainMenuFadeComplete;
-        RandomBattleManager.OnRandomBattleTriggered -= OnRandomBattleTriggered;
+        RandomBattleGenerator.OnRandomBattleTriggered -= OnRandomBattleTriggered;
     }
 
     #endregion
