@@ -13,6 +13,8 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
     public BattleCharacterStats_SO characterDefinitionTemplate;
     public BattleCharacterStats_SO characterDefinition;
 
+    private ToonRTSAnimationController _animationController;
+
     public string GetCharacterName()
     {
         return characterDefinition.CharacterName;
@@ -67,6 +69,7 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
         {
             agent.stoppingDistance = 0;
             agent.SetDestination(startingPosition);
+            _animationController.AttackAnimation();
             target.TakeDamage(characterDefinition.baseDamage);
             StartCoroutine(AgentReachedDestination(agent, () =>
             {
@@ -88,6 +91,7 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
 
     public void TakeDamage(int damage)
     {
+        _animationController.TakeDamageAnimation();
         characterDefinition.TakeDamage(damage);
     }
 
@@ -98,6 +102,7 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
 
     private void HandleBattleCharacterDeath()
     {
+        _animationController.Die();
         OnBattleCharacterDeath?.Invoke(gameObject);
     }
 
@@ -113,10 +118,12 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
         
         // Subscribe and bubble up death event
         characterDefinition.OnBattleCharacterDeath += HandleBattleCharacterDeath;
+        _animationController = GetComponent<ToonRTSAnimationController>();
     }
 
     private void OnDestroy()
     {
         characterDefinition.OnBattleCharacterDeath -= HandleBattleCharacterDeath;
+        StopAllCoroutines();
     }
 }

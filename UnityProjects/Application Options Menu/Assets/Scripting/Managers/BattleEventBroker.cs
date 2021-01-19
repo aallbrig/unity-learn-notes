@@ -102,9 +102,12 @@ public class BattleEventBroker : Singleton<BattleEventBroker>
     {
         base.OnDestroy();
 
-        BattleManager.Instance.OnBattleMeterTickEvent -= OnBattleMeterTick;
-        BattleManager.Instance.OnBattleCharacterReadyToActEvent -= OnBattleCharReadyToAct;
-        BattleManager.Instance.OnBattleCharacterHasActedEvent -= OnBattleCharacterHasActed;
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.OnBattleMeterTickEvent -= OnBattleMeterTick;
+            BattleManager.Instance.OnBattleCharacterReadyToActEvent -= OnBattleCharReadyToAct;
+            BattleManager.Instance.OnBattleCharacterHasActedEvent -= OnBattleCharacterHasActed;
+        }
         BattleManager.OnBattleLostEvent -= OnBattleLost;
         BattleManager.OnBattleVictoryEvent -= OnBattleVictory;
         BattleCommandManager.OnBattleCommandStart -= OnBattleCommandStart;

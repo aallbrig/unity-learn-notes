@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRandomBattleTriggered
+public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRandomBattleTriggered, IBattleVictory, IBattleLost
 {
     public delegate void GameStateChange(GameState prevState, GameState newState);
     public static event GameStateChange OnGameStateChange;
@@ -11,6 +11,8 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRando
 
     private GameState _currentGameState;
     private string _currentLevelName;
+    private Vector3 _playerPosition;
+    private Quaternion _playerRotation;
     private readonly List<AsyncOperation> _loadOperations = new List<AsyncOperation>();
 
 
@@ -39,6 +41,13 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRando
         asyncOp.completed += (AsyncOperation op) =>
         {
             if (_loadOperations.Count == 0) UpdateGameState(desiredGameState);
+            if (desiredGameState == GameState.Running && _playerPosition != Vector3.zero && _playerRotation != Quaternion.identity)
+            {
+                GameObject.FindWithTag("Player").transform.position = _playerPosition;
+                GameObject.FindWithTag("Player").transform.rotation = _playerRotation;
+                _playerPosition = Vector3.zero;
+                _playerRotation = Quaternion.identity;
+            }
         };
         _currentLevelName = levelName;
     }
@@ -104,6 +113,8 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRando
         // Register for events
         EventsBroker.Instance.SubscribeToMainMenuFadeComplete(this);
         EventsBroker.Instance.SubscribeToRandomBattleTriggered(this);
+        EventsBroker.Instance.SubscribeToBattleVictory(this);
+        EventsBroker.Instance.SubscribeToBattleLost(this);
     }
 
     protected override void OnDestroy()
@@ -129,9 +140,23 @@ public class GameManager : Singleton<GameManager>, IMainMenuFadeComplete, IRando
     public void Notify()
     {
         // Random battle triggered
+        var player = GameObject.FindWithTag("Player");
+        _playerPosition = player.transform.position;
+        _playerRotation = player.transform.rotation;
         UnloadLevel("Main");
         LoadLevel("Battle", GameState.Battle);
     }
-    #endregion
 
+    public void NotifyBattleVictory()
+    {
+        UnloadLevel("Battle");
+        LoadLevel("Main", GameState.Running);
+    }
+
+    public void NotifyBattleLost()
+    {
+        UnloadLevel("Battle");
+        UpdateGameState(GameState.Pregame);
+    }
+    #endregion
 }

@@ -193,6 +193,16 @@ public class BattleManager : Singleton<BattleManager>, IBattleCharReadyToAct, IB
         BattleEventBroker.Instance.SubscribeToBattleCharacterDeath(this);
         BattleEventBroker.Instance.SubscribeToBattleCommandStart(this);
         BattleEventBroker.Instance.SubscribeToBattleCommandComplete(this);
+        OnBattleLostEvent += () =>
+        {
+            foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                Destroy(enemy);
+        };
+        OnBattleVictoryEvent += () =>
+        {
+            foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                Destroy(enemy);
+        };
 
         _battleMeterTickCoroutine = BattleMeterTick();
         StartCoroutine(_battleMeterTickCoroutine);

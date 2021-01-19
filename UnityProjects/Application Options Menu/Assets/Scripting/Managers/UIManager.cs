@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class UIManager : Singleton<UIManager>, IGameStateChange
+public class UIManager : Singleton<UIManager>, IGameStateChange, IBattleLost
 {
     public delegate void MainMenuFadeComplete(bool isFadeIn);
     public static event MainMenuFadeComplete OnMainMenuFadeComplete;
@@ -40,6 +40,7 @@ public class UIManager : Singleton<UIManager>, IGameStateChange
         MainMenu.OnMainMenuFadeStart += onMainMenuFadeStart;
         MainMenu.OnMainMenuFadeComplete += onMainMenuFadeComplete;
         EventsBroker.Instance.SubscribeToGameStateChange(this);
+        EventsBroker.Instance.SubscribeToBattleLost(this);
     }
 
     protected override void OnDestroy()
@@ -69,5 +70,10 @@ public class UIManager : Singleton<UIManager>, IGameStateChange
         
         // Main menu and pause menu are set to active based on
         pauseMenu.gameObject.SetActive(currentState == GameManager.GameState.Paused);
+    }
+
+    public void NotifyBattleLost()
+    {
+        onMainMenuFadeStart(true);
     }
 }
