@@ -5,10 +5,9 @@ using UnityEngine.AI;
 
 public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
 {
-    public delegate void BattleCharacterDeath();
-
+    public delegate void BattleCharacterDeath(GameObject battleChar);
+    public static event BattleCharacterDeath OnBattleCharacterDeath;
     public delegate void BattleCharacterAttackComplete();
-    public event BattleCharacterDeath OnBattleCharacterDeath;
     public event BattleCharacterAttackComplete OnBattleCharacterAttackComplete;
 
     public BattleCharacterStats_SO characterDefinitionTemplate;
@@ -99,7 +98,7 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
 
     private void HandleBattleCharacterDeath()
     {
-        OnBattleCharacterDeath?.Invoke();
+        OnBattleCharacterDeath?.Invoke(gameObject);
     }
 
     private void Awake()

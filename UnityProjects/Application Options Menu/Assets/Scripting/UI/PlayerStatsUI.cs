@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,8 +35,10 @@ public class PlayerStatsUI : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+
     private void Start()
     {
+        // TODO: Stop being lazy - only update UI when a notable event happens!
         StartCoroutine(KeepStatsUIUpdated());
     }
 

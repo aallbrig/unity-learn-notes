@@ -22,7 +22,7 @@ public struct BattleInfo
     public bool isDead;
 }
 
-public class BattleManager : Singleton<BattleManager>
+public class BattleManager : Singleton<BattleManager>, IBattleCharReadyToAct, IBattleCharacterHasActed, IBattleCharacterDeath, IBattleCommandStart, IBattleCommandComplete
 {
     public delegate void BattleMeterTickEvent(GameObject battleChar, float battleMeterValue);
     public event BattleMeterTickEvent OnBattleMeterTickEvent;
@@ -38,6 +38,7 @@ public class BattleManager : Singleton<BattleManager>
     public List<GameObject> possibleEnemies;
     public List<Transform> possibleEnemyLocations;
 
+    private bool stopBattleMeterTicks;
     [SerializeField] private BattleCharacterStats[] battleCharacters;
     [SerializeField] private List<GameObject> _battleCharacters = new List<GameObject>();
     [SerializeField] private List<GameObject> _playerCharacters = new List<GameObject>();
@@ -50,6 +51,7 @@ public class BattleManager : Singleton<BattleManager>
 
     private void GenerateMonsters()
     {
+        // spawn at least 1 enemy
         var enemiesToSpawn = Random.Range(1, possibleEnemyLocations.Count);
 
         for (int i = 0; i < enemiesToSpawn; i++)
@@ -64,18 +66,21 @@ public class BattleManager : Singleton<BattleManager>
 
     private void HandleOnBattleCharacterHasActed(GameObject battleChar)
     {
-        var battleInfo = _battleCharToInfo[battleChar];
-        battleInfo.battleMeterVal = 0;
-        battleInfo.canAct = true;
-        _battleCharToInfo[battleChar] = battleInfo;
+        if (_battleCharToInfo.ContainsKey(battleChar))
+        {
+            var battleInfo = _battleCharToInfo[battleChar];
+            battleInfo.battleMeterVal = 0;
+            battleInfo.canAct = true;
+            _battleCharToInfo[battleChar] = battleInfo;
+        }
     }
 
     private void HandleOnBattleCharacterReadyToAct(GameObject battleChar)
     {
-        if (battleChar.CompareTag("Enemy"))
+        if (battleChar.CompareTag("Enemy") && _enemies.Contains(battleChar))
         {
             var target = _playerCharacters[Random.Range(0, _playerCharacters.Count)];
-            var cmd = new BattleCommand(battleChar.GetComponent<BattleCharacterStats>(), target.GetComponent<BattleCharacterStats>());
+            var cmd = new AttackBattleCommand(battleChar.GetComponent<BattleCharacterStats>(), target.GetComponent<BattleCharacterStats>());
             cmd.OnBattleCommandComplete += () => OnBattleCharacterHasActedEvent?.Invoke(battleChar);
             BattleCommandManager.Instance.Add(cmd);
         }
@@ -93,8 +98,11 @@ public class BattleManager : Singleton<BattleManager>
             if (newBattleMeterVal >= 1.0)
             {
                 battleInfo.canAct = false;
+                battleInfo.battleMeterVal = 1.0f;
                 _battleCharToInfo[battleChar] = battleInfo;
                 Debug.LogWarning("Battle char " + battleChar.name + " is ready to act!");
+
+                OnBattleMeterTickEvent?.Invoke(battleChar, newBattleMeterVal);
                 OnBattleCharacterReadyToActEvent?.Invoke(battleChar);
             }
             else
@@ -111,7 +119,8 @@ public class BattleManager : Singleton<BattleManager>
     {
         while (true)
         {
-            _battleCharacters.ForEach(HandleBattleMeterTick);
+            if (!stopBattleMeterTicks) _battleCharacters.ForEach(HandleBattleMeterTick);
+
             yield return new WaitForSeconds(BattleMeterTickRate);
         }
     }
@@ -149,9 +158,9 @@ public class BattleManager : Singleton<BattleManager>
         }
     }
     
-    private BattleCharacterStats.BattleCharacterDeath HandleBattleCharacterDeath(GameObject battleChar)
+    private void HandleBattleCharacterDeath(GameObject battleChar)
     {
-        return () => CleanUpBattleCharacterInfo(battleChar);
+        CleanUpBattleCharacterInfo(battleChar);
     }
 
     private void Start()
@@ -177,22 +186,45 @@ public class BattleManager : Singleton<BattleManager>
                 battleChar,
                 new BattleInfo(battleCharStats, randomBattleMeterStartValue, battleMeterTickRate, true, false)
             );
-
-            battleCharStats.OnBattleCharacterDeath += HandleBattleCharacterDeath(battleChar);
         }
 
-        OnBattleCharacterReadyToActEvent += HandleOnBattleCharacterReadyToAct;
-        OnBattleCharacterHasActedEvent += HandleOnBattleCharacterHasActed;
+        BattleEventBroker.Instance.SubscribeToBattleCharReadyToAct(this);
+        BattleEventBroker.Instance.SubscribeToBattleCharacterHasActed(this);
+        BattleEventBroker.Instance.SubscribeToBattleCharacterDeath(this);
+        BattleEventBroker.Instance.SubscribeToBattleCommandStart(this);
+        BattleEventBroker.Instance.SubscribeToBattleCommandComplete(this);
 
         _battleMeterTickCoroutine = BattleMeterTick();
         StartCoroutine(_battleMeterTickCoroutine);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         StopCoroutine(_battleMeterTickCoroutine);
 
-        OnBattleCharacterReadyToActEvent -= HandleOnBattleCharacterReadyToAct;
-        OnBattleCharacterHasActedEvent -= HandleOnBattleCharacterHasActed;
+        BattleEventBroker.Instance.UnsubscribeToBattleCharReadyToAct(this);
+        BattleEventBroker.Instance.UnsubscribeToBattleCharacterHasActed(this);
+        BattleEventBroker.Instance.UnsubscribeToBattleCharacterDeath(this);
+    }
+
+    public void NotifyBattleCharReadyToAct(GameObject battleChar) =>
+        HandleOnBattleCharacterReadyToAct(battleChar);
+
+    public void NotifyBattleCharacterHasActed(GameObject battleChar) =>
+        HandleOnBattleCharacterHasActed(battleChar);
+
+    public void NotifyBattleCharacterDeath(GameObject battleChar) =>
+        HandleBattleCharacterDeath(battleChar);
+
+    public void NotifyBattleCommandStart()
+    {
+        stopBattleMeterTicks = true;
+    }
+
+    public void NotifyBattleCommandComplete()
+    {
+        stopBattleMeterTicks = false;
     }
 }

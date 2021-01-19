@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7434ba9972f92c4f8033ded94e8a233, type: 3}
   m_Name: GenericStats
   m_EditorClassIdentifier: 
+  characterName: generic
   maxHealth: 30
   currentHealth: 30
   maxMana: 0
   currentMana: 0
-  baseDamage: 100
+  baseDamage: 5
   currentDamage: 5
   baseResistance: 0
   currentResistance: 0

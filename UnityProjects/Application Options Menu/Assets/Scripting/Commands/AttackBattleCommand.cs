@@ -1,4 +1,4 @@
-﻿public class BattleCommand : IBattleCommand
+﻿public class AttackBattleCommand : IBattleCommand
 {
     public event BattleCommandEvents.BattleCommandEvent OnBattleCommandStart;
     public event BattleCommandEvents.BattleCommandEvent OnBattleCommandComplete;
@@ -6,7 +6,7 @@
     private readonly BattleCharacterStats _attacker;
     private readonly BattleCharacterStats _attackTarget;
 
-    public BattleCommand(BattleCharacterStats attacker, BattleCharacterStats attackTarget)
+    public AttackBattleCommand(BattleCharacterStats attacker, BattleCharacterStats attackTarget)
     {
         _attacker = attacker;
         _attackTarget = attackTarget;
@@ -20,7 +20,14 @@
     public void Execute()
     {
         OnBattleCommandStart?.Invoke();
-        _attacker.OnBattleCharacterAttackComplete += HandleAttackComplete;
-        _attacker.ExecuteAttack(_attackTarget);
+        if (_attacker.characterDefinition.CurrentHealth > 0 && _attackTarget.characterDefinition.CurrentHealth > 0)
+        {
+            _attacker.OnBattleCharacterAttackComplete += HandleAttackComplete;
+            _attacker.ExecuteAttack(_attackTarget);
+        }
+        else
+        {
+            HandleAttackComplete();
+        }
     }
 }

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7434ba9972f92c4f8033ded94e8a233, type: 3}
   m_Name: HeroStats
   m_EditorClassIdentifier: 
+  characterName: 
   maxHealth: 100
   currentHealth: 100
   maxMana: 20
   currentMana: 20
-  baseDamage: 10
+  baseDamage: 1000
   currentDamage: 10
   baseResistance: 0
   currentResistance: 0
