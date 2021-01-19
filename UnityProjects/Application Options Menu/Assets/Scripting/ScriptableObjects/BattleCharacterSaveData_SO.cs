@@ -4,6 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Battle Character Save Data", menuName = "BattleCharacter/SaveData", order = 1)]
 public class BattleCharacterSaveData_SO : ScriptableObject
 {
+    [Header("Player customization")]
+    [SerializeField] public string characterName;
+    
     [Header("Stats")]
     [SerializeField] private int currentHealth;
 

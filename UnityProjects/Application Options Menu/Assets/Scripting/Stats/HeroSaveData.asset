@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fd5211c6c52494ea7cd9620a30c462, type: 3}
   m_Name: HeroSaveData
   m_EditorClassIdentifier: 
-  currentHealth: 100
+  characterName: Squall
+  currentHealth: 400
   currentLevel: 1
   maxLevel: 30
   basisPoints: 200

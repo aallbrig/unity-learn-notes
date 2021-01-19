@@ -48,9 +48,6 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator _battleMeterTickCoroutine;
     private const float BattleMeterTickRate = 0.5f;
 
-    // Command players and NPCs to initiate attacks
-    // Once all players or enemies are defeated, show a rewards screen
-
     private void GenerateMonsters()
     {
         var enemiesToSpawn = Random.Range(1, possibleEnemyLocations.Count);
@@ -193,6 +190,8 @@ public class BattleManager : Singleton<BattleManager>
 
     private void OnDestroy()
     {
+        StopCoroutine(_battleMeterTickCoroutine);
+
         OnBattleCharacterReadyToActEvent -= HandleOnBattleCharacterReadyToAct;
         OnBattleCharacterHasActedEvent -= HandleOnBattleCharacterHasActed;
     }

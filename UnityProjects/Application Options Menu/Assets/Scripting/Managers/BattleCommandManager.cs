@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BattleCommandManager: Singleton<BattleCommandManager>
 {
+    private bool _canExecuteCommand = true;
     private const float BattleCommandProcessInterval = 1.5f;
     private IEnumerator _battleCommandCoroutine;
     private readonly List<IBattleCommand> _battleCommandQueue = new List<IBattleCommand>();
@@ -23,9 +24,11 @@ public class BattleCommandManager: Singleton<BattleCommandManager>
     {
         while (true)
         {
-            if (_battleCommandQueue.Count > 0)
+            if (_canExecuteCommand && _battleCommandQueue.Count > 0)
             {
+                _canExecuteCommand = false;
                 var cmd = GetNextBattleCommand();
+                cmd.OnBattleCommandComplete += () => _canExecuteCommand = true;
                 cmd.Execute();
             }
             yield return new WaitForSeconds(BattleCommandProcessInterval);

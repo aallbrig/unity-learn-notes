@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BattleEventBroker : Singleton<BattleEventBroker>
 {
-    private List<IBattleMeterTick> _battleMeterTickSubscribers = new List<IBattleMeterTick>();
 
     #region BattleMeterTick
+    private List<IBattleMeterTick> _battleMeterTickSubscribers = new List<IBattleMeterTick>();
     public void SubscribeToBattleMeterTick(IBattleMeterTick subscriber) =>
         _battleMeterTickSubscribers.Add(subscriber);
     public void UnsubscribeToBattleMeterTick(IBattleMeterTick subscriber) =>
@@ -14,8 +14,23 @@ public class BattleEventBroker : Singleton<BattleEventBroker>
         _battleMeterTickSubscribers.ForEach((sub) => sub.NotifyBattleMeterTick(battleChar, battleMeter));
     #endregion
     
+    #region BattleCharacterReadyToAct
+    private List<IBattleCharReadyToAct> _battleCharReadyToActSubscribers = new List<IBattleCharReadyToAct>();
+    public void SubscribeToBattleCharReadyToAct(IBattleCharReadyToAct subscriber) =>
+        _battleCharReadyToActSubscribers.Add(subscriber);
+    public void UnsubscribeToBattleCharReadyToAct(IBattleCharReadyToAct subscriber) =>
+        _battleCharReadyToActSubscribers.Remove(subscriber);
+    private void OnBattleCharReadyToAct(GameObject battleChar) =>
+        _battleCharReadyToActSubscribers.ForEach(sub => sub.NotifyBattleCharReadyToAct(battleChar));
+    #endregion
+
+    #region BattleCharacterReadyToAct
+    
+    #endregion
+    
     private void Start()
     {
         BattleManager.Instance.OnBattleMeterTickEvent += OnBattleMeterTick;
+        BattleManager.Instance.OnBattleCharacterReadyToActEvent += OnBattleCharReadyToAct;
     }
 }

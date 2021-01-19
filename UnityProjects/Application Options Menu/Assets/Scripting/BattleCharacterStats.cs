@@ -14,9 +14,18 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
     public BattleCharacterStats_SO characterDefinitionTemplate;
     public BattleCharacterStats_SO characterDefinition;
 
+    public string GetCharacterName()
+    {
+        return characterDefinition.CharacterName;
+    }
     public int GetHealth()
     {
         return characterDefinition.CurrentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return characterDefinition.MaxHealth;
     }
 
     private IEnumerator AgentReachedDestination(NavMeshAgent agent, Action callback)
@@ -43,6 +52,12 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
 
     public void ExecuteAttack(BattleCharacterStats target)
     {
+        if (target.characterDefinition.CurrentHealth <= 0)
+        {
+            OnBattleCharacterAttackComplete?.Invoke();
+            return;
+        }
+
         var startingPosition = transform.position;
         var startingRotation = transform.rotation;
         var agent = GetComponent<NavMeshAgent>();

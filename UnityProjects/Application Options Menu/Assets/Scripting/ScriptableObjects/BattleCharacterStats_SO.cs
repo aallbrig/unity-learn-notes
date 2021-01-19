@@ -6,6 +6,8 @@ public class BattleCharacterStats_SO : ScriptableObject
     public delegate void BattleCharacterDeath();
     public event BattleCharacterDeath OnBattleCharacterDeath;
 
+    public string characterName;
+
     public int maxHealth;
     public int currentHealth;
 
@@ -21,6 +23,8 @@ public class BattleCharacterStats_SO : ScriptableObject
     public float secondsUntilMeterFull;
 
     public BattleCharacterSaveData_SO battleCharacterData;
+
+    public string CharacterName => battleCharacterData != null ? battleCharacterData.characterName : characterName;
 
     public int MaxHealth =>
         battleCharacterData != null
