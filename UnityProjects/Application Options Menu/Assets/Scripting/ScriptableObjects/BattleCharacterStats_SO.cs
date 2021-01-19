@@ -91,7 +91,7 @@ public class BattleCharacterStats_SO : ScriptableObject
 
     private void Death()
     {
-        Debug.LogWarning("This battle character has died!");
+        Debug.LogWarning("This battle character " + name + " has died!");
         OnBattleCharacterDeath?.Invoke();
     }
 }

@@ -17,11 +17,12 @@ public struct BattleInfo
     public BattleCharacterStats stats;
     // 1.0 == ready to act
     public float battleMeterVal;
-    public float battleMeterTickRate;
+    public readonly float battleMeterTickRate;
     public bool canAct;
     public bool isDead;
 }
-public class BattleManager : MonoBehaviour
+
+public class BattleManager : Singleton<BattleManager>
 {
     public delegate void BattleMeterTickEvent(GameObject battleChar, float battleMeterValue);
     public event BattleMeterTickEvent OnBattleMeterTickEvent;
@@ -45,9 +46,8 @@ public class BattleManager : MonoBehaviour
     private readonly Dictionary<GameObject, BattleInfo> _battleCharToInfo = new Dictionary<GameObject, BattleInfo>();
 
     private IEnumerator _battleMeterTickCoroutine;
-    private const float BattleMeterTickRate = 0.2f;
+    private const float BattleMeterTickRate = 0.5f;
 
-    // Start everyone's ATB meter at 0
     // Command players and NPCs to initiate attacks
     // Once all players or enemies are defeated, show a rewards screen
 
@@ -71,7 +71,6 @@ public class BattleManager : MonoBehaviour
         battleInfo.battleMeterVal = 0;
         battleInfo.canAct = true;
         _battleCharToInfo[battleChar] = battleInfo;
-        Debug.Log(_battleCharToInfo[battleChar].canAct);
     }
 
     private void HandleOnBattleCharacterReadyToAct(GameObject battleChar)
@@ -79,8 +78,9 @@ public class BattleManager : MonoBehaviour
         if (battleChar.CompareTag("Enemy"))
         {
             var target = _playerCharacters[Random.Range(0, _playerCharacters.Count)];
-            Debug.LogWarning("Enemy " + battleChar.name + " chooses to attack player " + target.name);
-            OnBattleCharacterHasActedEvent?.Invoke(battleChar);
+            var cmd = new BattleCommand(battleChar.GetComponent<BattleCharacterStats>(), target.GetComponent<BattleCharacterStats>());
+            cmd.OnBattleCommandComplete += () => OnBattleCharacterHasActedEvent?.Invoke(battleChar);
+            BattleCommandManager.Instance.Add(cmd);
         }
     }
 
@@ -90,7 +90,6 @@ public class BattleManager : MonoBehaviour
 
         if (!battleInfo.isDead && battleInfo.canAct)
         {
-            // TODO: division sucks for performance
             var battleMeterTick = battleInfo.battleMeterTickRate * BattleMeterTickRate;
             var newBattleMeterVal = battleInfo.battleMeterVal + battleMeterTick;
             
@@ -195,5 +194,6 @@ public class BattleManager : MonoBehaviour
     private void OnDestroy()
     {
         OnBattleCharacterReadyToActEvent -= HandleOnBattleCharacterReadyToAct;
+        OnBattleCharacterHasActedEvent -= HandleOnBattleCharacterHasActed;
     }
 }

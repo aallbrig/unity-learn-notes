@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
 
 public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
 {
     public delegate void BattleCharacterDeath();
+
+    public delegate void BattleCharacterAttackComplete();
     public event BattleCharacterDeath OnBattleCharacterDeath;
+    public event BattleCharacterAttackComplete OnBattleCharacterAttackComplete;
 
     public BattleCharacterStats_SO characterDefinitionTemplate;
     public BattleCharacterStats_SO characterDefinition;
@@ -13,9 +19,47 @@ public class BattleCharacterStats : MonoBehaviour, IBattleCharacter
         return characterDefinition.CurrentHealth;
     }
 
-    public void ExecuteAttack(GameObject attacker, GameObject target)
+    private IEnumerator AgentReachedDestination(NavMeshAgent agent, Action callback)
     {
-        throw new System.NotImplementedException();
+        while (true)
+        {
+            if (!agent.pathPending)
+            {
+                if (agent.remainingDistance <= agent.stoppingDistance + 3)
+                {
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                    {
+                        // Done
+                        break;
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        callback?.Invoke();
+    }
+
+    public void ExecuteAttack(BattleCharacterStats target)
+    {
+        var startingPosition = transform.position;
+        var startingRotation = transform.rotation;
+        var agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = 4;
+        agent.SetDestination(target.transform.position);
+
+        StartCoroutine(AgentReachedDestination(agent, () =>
+        {
+            agent.stoppingDistance = 0;
+            agent.SetDestination(startingPosition);
+            target.TakeDamage(characterDefinition.baseDamage);
+            StartCoroutine(AgentReachedDestination(agent, () =>
+            {
+                transform.rotation = startingRotation;
+                OnBattleCharacterAttackComplete?.Invoke();
+            }));
+        }));
     }
 
     public void ApplyHeal(int heal)

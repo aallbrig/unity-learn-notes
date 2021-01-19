@@ -3,7 +3,7 @@
 public interface IBattleCharacter
 {
     int GetHealth();
-    void ExecuteAttack(GameObject attacker, GameObject target);
+    void ExecuteAttack(BattleCharacterStats target);
     void ApplyHeal(int heal);
     void ApplyMana(int mana);
     void TakeDamage(int damage);
