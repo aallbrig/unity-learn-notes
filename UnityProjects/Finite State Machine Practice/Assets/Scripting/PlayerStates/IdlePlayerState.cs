@@ -14,10 +14,27 @@ public class IdlePlayerState : BasePlayerState
             playerCtl.Rigidbody.AddForce(Vector3.up * playerCtl.jumpForce, ForceMode.Impulse);
             playerCtl.TransitionToState(playerCtl.JumpingState);
         }
+
+        if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") > 0)
+        {
+            playerCtl.TransitionToState(playerCtl.WalkingState);
+        }
+
+        if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
+        {
+            playerCtl.TransitionToState(playerCtl.DeadState);
+        }
+
+        if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") > 0)
+        {
+            playerCtl.TransitionToState(playerCtl.AttackingState);
+        }
+        
+        if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") < 0)
+        {
+            playerCtl.TransitionToState(playerCtl.TakingDamageState);
+        }
     }
 
-    public override void OnCollisionEnter(PlayerController playerCtl)
-    {
-        throw new System.NotImplementedException();
-    }
+    public override void OnCollisionEnter(PlayerController playerCtl) {}
 }
