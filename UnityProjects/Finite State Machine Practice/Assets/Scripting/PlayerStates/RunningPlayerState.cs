@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 
-public class RunningPlayerState : BasePlayerState
+namespace Scripting.PlayerStates
 {
-    public override void Enter(PlayerController playerCtl)
+    public class RunningPlayerState : BasePlayerState
     {
-        playerCtl.TriggerAnimation("running");
-    }
-
-    public override void Update(PlayerController playerCtl)
-    {
-        if (Input.GetAxis("Vertical") < 0)
+        public override void Enter(PlayerController playerCtl)
         {
-            playerCtl.TransitionToState(playerCtl.WalkingState);
+            playerCtl.TriggerAnimation("running");
         }
-    }
 
-    public override void OnCollisionEnter(PlayerController playerCtl)
-    {
-        throw new System.NotImplementedException();
+        public override void Tick(PlayerController playerCtl)
+        {
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                playerCtl.TransitionToState(playerCtl.WalkingState);
+            }
+        }
+
+        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) { }
     }
 }

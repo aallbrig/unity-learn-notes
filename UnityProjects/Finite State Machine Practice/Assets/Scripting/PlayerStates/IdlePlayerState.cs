@@ -1,40 +1,42 @@
 ﻿using UnityEngine;
 
-public class IdlePlayerState : BasePlayerState
+namespace Scripting.PlayerStates
 {
-    public override void Enter(PlayerController playerCtl)
+    public class IdlePlayerState : BasePlayerState
     {
-        playerCtl.TriggerAnimation("idle");
-    }
-
-    public override void Update(PlayerController playerCtl)
-    {
-        if (Input.GetButtonDown("Jump"))
+        public override void Enter(PlayerController playerCtl)
         {
-            playerCtl.Rigidbody.AddForce(Vector3.up * playerCtl.jumpForce, ForceMode.Impulse);
-            playerCtl.TransitionToState(playerCtl.JumpingState);
+            playerCtl.TriggerAnimation("idle");
         }
 
-        if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") > 0)
+        public override void Tick(PlayerController playerCtl)
         {
-            playerCtl.TransitionToState(playerCtl.WalkingState);
-        }
+            if (Input.GetButtonDown("Jump"))
+            {
+                playerCtl.TransitionToState(playerCtl.JumpingState);
+            }
 
-        if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
-        {
-            playerCtl.TransitionToState(playerCtl.DeadState);
-        }
+            if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") > 0)
+            {
+                playerCtl.TransitionToState(playerCtl.WalkingState);
+            }
 
-        if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") > 0)
-        {
-            playerCtl.TransitionToState(playerCtl.AttackingState);
-        }
+            if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
+            {
+                playerCtl.TransitionToState(playerCtl.DeadState);
+            }
+
+            if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") > 0)
+            {
+                playerCtl.TransitionToState(playerCtl.AttackingState);
+            }
         
-        if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") < 0)
-        {
-            playerCtl.TransitionToState(playerCtl.TakingDamageState);
+            if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") < 0)
+            {
+                playerCtl.TransitionToState(playerCtl.TakingDamageState);
+            }
         }
-    }
 
-    public override void OnCollisionEnter(PlayerController playerCtl) {}
+        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) {}
+    }
 }

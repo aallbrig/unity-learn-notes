@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 
-public class WalkingPlayerState : BasePlayerState
+namespace Scripting.PlayerStates
 {
-    public override void Enter(PlayerController playerCtl)
+    public class WalkingPlayerState : BasePlayerState
     {
-        playerCtl.TriggerAnimation("walking");
-    }
-
-    public override void Update(PlayerController playerCtl)
-    {
-        if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") > 0)
+        public override void Enter(PlayerController playerCtl)
         {
-            playerCtl.TransitionToState(playerCtl.RunningState);
+            playerCtl.TriggerAnimation("walking");
         }
 
-        if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
+        public override void Tick(PlayerController playerCtl)
         {
-            playerCtl.TransitionToState(playerCtl.IdleState);
-        }
-    }
+            if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") > 0)
+            {
+                playerCtl.TransitionToState(playerCtl.RunningState);
+            }
 
-    public override void OnCollisionEnter(PlayerController playerCtl) {}
+            if (Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
+            {
+                playerCtl.TransitionToState(playerCtl.IdleState);
+            }
+        }
+
+        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) {}
+    }
 }

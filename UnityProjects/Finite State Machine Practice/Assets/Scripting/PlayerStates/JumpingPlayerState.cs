@@ -1,14 +1,17 @@
-﻿public class JumpingPlayerState : BasePlayerState
+﻿using UnityEngine;
+
+namespace Scripting.PlayerStates
 {
-    public override void Enter(PlayerController playerCtl)
+    public class JumpingPlayerState : BasePlayerState
     {
-        playerCtl.TriggerAnimation("jump");
-    }
+        public override void Enter(PlayerController playerCtl)
+        {
+            playerCtl.Rigidbody.AddForce(Vector3.up * playerCtl.jumpForce, ForceMode.Impulse);
+            playerCtl.TriggerAnimation("jump");
+        }
 
-    public override void Update(PlayerController playerCtl) {}
+        public override void Tick(PlayerController playerCtl) {}
 
-    public override void OnCollisionEnter(PlayerController playerCtl)
-    {
-        playerCtl.TransitionToState(playerCtl.IdleState);
+        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) { }
     }
 }

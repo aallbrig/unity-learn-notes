@@ -1,7 +1,11 @@
-﻿
-public abstract class BasePlayerState
+﻿using UnityEngine;
+
+namespace Scripting.PlayerStates
 {
-    public abstract void Enter(PlayerController playerCtl);
-    public abstract void Update(PlayerController playerCtl);
-    public abstract void OnCollisionEnter(PlayerController playerCtl);
+    public abstract class BasePlayerState
+    {
+        public abstract void Enter(PlayerController playerCtl);
+        public abstract void Tick(PlayerController playerCtl);
+        public abstract void OnCollisionEnter(PlayerController playerCtl, Collision other);
+    }
 }

@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class DeadPlayerState : BasePlayerState
+namespace Scripting.PlayerStates
 {
-    public override void Enter(PlayerController playerCtl)
+    public class DeadPlayerState : BasePlayerState
     {
-        playerCtl.TriggerAnimation("death");
-    }
-
-    public override void Update(PlayerController playerCtl)
-    {
-        if (Input.GetAxis("Vertical") > 0)
+        public override void Enter(PlayerController playerCtl)
         {
-            playerCtl.TransitionToState(playerCtl.IdleState);
+            playerCtl.TriggerAnimation("death");
         }
-    }
 
-    public override void OnCollisionEnter(PlayerController playerCtl) {}
+        public override void Tick(PlayerController playerCtl)
+        {
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                playerCtl.TransitionToState(playerCtl.IdleState);
+            }
+        }
+
+        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) {}
+    }
 }

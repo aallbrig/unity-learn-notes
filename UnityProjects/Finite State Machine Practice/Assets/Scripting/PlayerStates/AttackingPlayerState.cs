@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class AttackingPlayerState : BasePlayerState
+namespace Scripting.PlayerStates
 {
-    public override void Enter(PlayerController playerCtl)
+    public class AttackingPlayerState : BasePlayerState
     {
-        playerCtl.TriggerAnimation("attacking");
-    }
-
-    public override void Update(PlayerController playerCtl)
-    {
-        if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") > 0)
+        public override void Enter(PlayerController playerCtl)
         {
-            playerCtl.TransitionToState(playerCtl.IdleState);
+            playerCtl.TriggerAnimation("attacking");
         }
-    }
 
-    public override void OnCollisionEnter(PlayerController playerCtl) {}
+        public override void Tick(PlayerController playerCtl)
+        {
+            if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") < 0)
+            {
+                playerCtl.TransitionToState(playerCtl.IdleState);
+            }
+        }
+
+        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) {}
+    }
 }
