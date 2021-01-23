@@ -7,7 +7,7 @@ namespace Scripting.PlayerStates
     {
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation("walking");
+            playerController.AnimationController.TriggerAnimation(PlayerAnimations.Walking);
         }
 
         public override void Tick(PlayerController playerController)

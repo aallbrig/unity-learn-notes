@@ -10,7 +10,7 @@ namespace Scripting.PlayerStates
         
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation("taking damage");
+            playerController.AnimationController.TriggerAnimation(PlayerAnimations.TakingDamage);
 
             _detectTakingDamageComplete = DetectTakingDamageComplete(playerController);
             playerController.StartCoroutine(_detectTakingDamageComplete);

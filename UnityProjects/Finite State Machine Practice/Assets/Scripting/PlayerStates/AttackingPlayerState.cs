@@ -10,7 +10,9 @@ namespace Scripting.PlayerStates
 
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation(Random.Range(0f, 1f) > 0.5 ? "attacking" : "melee attack");
+            var attackTriggerAnimation = Random.Range(0f, 1f) > 0.5 ?
+                PlayerAnimations.RangedAttacking : PlayerAnimations.MeleeAttacking;
+            playerController.AnimationController.TriggerAnimation(attackTriggerAnimation);
 
             _attackCompleteDetection = DetectAttackComplete(playerController);
             playerController.StartCoroutine(_attackCompleteDetection);

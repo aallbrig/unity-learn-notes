@@ -7,7 +7,8 @@ namespace Scripting.PlayerStates
     {
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation(Random.Range(0f, 1f) > 0.5 ? "death" : "death b");
+            var deathTriggerAnimation = Random.Range(0f, 1f) > 0.5 ? PlayerAnimations.DeathA : PlayerAnimations.DeathB;
+            playerController.AnimationController.TriggerAnimation(deathTriggerAnimation);
         }
 
         public override void Tick(PlayerController playerController)

@@ -10,7 +10,7 @@ namespace Scripting.PlayerStates
         public override void Enter(PlayerController playerController)
         {
             playerController.Rigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
-            playerController.AnimationController.TriggerAnimation("jump");
+            playerController.AnimationController.TriggerAnimation(PlayerAnimations.Jump);
         }
 
         public override void Tick(PlayerController playerController) {}

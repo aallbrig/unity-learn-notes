@@ -6,11 +6,11 @@ namespace Scripting.PlayerStates
 {
     public class CombatIdlePlayerState : BasePlayerState
     {
-        private const float CombatIdleWaitTime = 10;
+        private const float CombatIdleWaitTime = 5;
         private IEnumerator _combatIdleDuration;
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation("combat idle");
+            playerController.AnimationController.TriggerAnimation(PlayerAnimations.CombatIdle);
 
             _combatIdleDuration = CombatIdleDuration(playerController);
             playerController.StartCoroutine(_combatIdleDuration);

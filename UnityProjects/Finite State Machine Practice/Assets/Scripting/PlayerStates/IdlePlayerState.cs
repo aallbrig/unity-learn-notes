@@ -7,7 +7,7 @@ namespace Scripting.PlayerStates
     {
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation("idle");
+            playerController.AnimationController.TriggerAnimation(PlayerAnimations.Idle);
         }
 
         public override void Tick(PlayerController playerController)

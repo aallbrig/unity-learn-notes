@@ -3,6 +3,22 @@ using UnityEngine;
 
 namespace Scripting.Controllers
 {
+    public static class PlayerAnimations
+    {
+        public static string DeathA => "death";
+        public static string DeathB => "death b";
+        public static string Jump => "jump";
+        public static string Idle => "idle";
+        public static string Walking => "walking";
+        public static string Running => "running";
+        public static string MeleeAttacking => "melee attack";
+        public static string RangedAttacking => "attacking";
+        public static string TakingDamage => "taking damage";
+        public static string CombatIdle => "combat idle";
+        public static string Charging => "charging";
+
+    }
+
     public class AnimationController : MonoBehaviour
     {
         // Animation clips whose normalized time variable is greater than 1.0 has played through the clip once
