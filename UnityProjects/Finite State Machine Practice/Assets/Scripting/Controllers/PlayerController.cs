@@ -9,6 +9,7 @@ namespace Scripting.Controllers
 
         public readonly IdlePlayerState IdleState = new IdlePlayerState();
         public readonly CombatIdlePlayerState CombatIdleState = new CombatIdlePlayerState();
+        public readonly ChargingPlayerState ChargingState = new ChargingPlayerState();
         public readonly JumpingPlayerState JumpingState = new JumpingPlayerState();
         public readonly WalkingPlayerState WalkingState = new WalkingPlayerState();
         public readonly RunningPlayerState RunningState = new RunningPlayerState();

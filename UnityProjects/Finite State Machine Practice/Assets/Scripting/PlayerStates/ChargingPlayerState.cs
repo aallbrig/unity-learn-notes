@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace Scripting.PlayerStates
 {
-    public class DeadPlayerState : BasePlayerState
+    public class ChargingPlayerState : BasePlayerState
     {
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation(Random.Range(0f, 1f) > 0.5 ? "death" : "death b");
+            playerController.AnimationController.TriggerAnimation("charging");
         }
 
         public override void Tick(PlayerController playerController)
         {
-            if (Input.GetAxis("Vertical") > 0)
+            if (Input.GetAxis("Vertical") < 0)
             {
-                playerController.TransitionToState(playerController.IdleState);
+                playerController.TransitionToState(playerController.WalkingState);
             }
         }
 
