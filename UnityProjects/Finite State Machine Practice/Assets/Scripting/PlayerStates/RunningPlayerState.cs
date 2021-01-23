@@ -1,22 +1,25 @@
-﻿using UnityEngine;
+﻿using Scripting.Controllers;
+using UnityEngine;
 
 namespace Scripting.PlayerStates
 {
     public class RunningPlayerState : BasePlayerState
     {
-        public override void Enter(PlayerController playerCtl)
+        public override void Enter(PlayerController playerController)
         {
-            playerCtl.TriggerAnimation("running");
+            playerController.AnimationController.TriggerAnimation("running");
         }
 
-        public override void Tick(PlayerController playerCtl)
+        public override void Tick(PlayerController playerController)
         {
             if (Input.GetAxis("Vertical") < 0)
             {
-                playerCtl.TransitionToState(playerCtl.WalkingState);
+                playerController.TransitionToState(playerController.WalkingState);
             }
         }
 
-        public override void OnCollisionEnter(PlayerController playerCtl, Collision other) { }
+        public override void Leave(PlayerController playerController) {}
+
+        public override void OnCollisionEnter(PlayerController playerController, Collision other) {}
     }
 }

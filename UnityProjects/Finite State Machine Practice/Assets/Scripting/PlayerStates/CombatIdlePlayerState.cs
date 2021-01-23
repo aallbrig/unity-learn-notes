@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Scripting.PlayerStates
 {
-    public class IdlePlayerState : BasePlayerState
+    public class CombatIdlePlayerState : BasePlayerState
     {
         public override void Enter(PlayerController playerController)
         {
-            playerController.AnimationController.TriggerAnimation("idle");
+            playerController.AnimationController.TriggerAnimation("combat idle");
         }
 
         public override void Tick(PlayerController playerController)
