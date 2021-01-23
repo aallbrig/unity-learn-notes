@@ -26,7 +26,7 @@ namespace Scripting.Controllers
             _currentTrigger = triggerName;
         }
 
-        private void Start()
+        private void Awake()
         {
             _animator = GetComponent<Animator>();
         }
